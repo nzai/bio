@@ -149,20 +149,23 @@ func (r BinaryReader) String() (string, error) {
 
 // Time read a time.Time
 func (r BinaryReader) Time() (time.Time, error) {
-	timestamp, err := r.UInt64()
+	value := time.Time{}
+
+	size, err := r.UInt8()
 	if err != nil {
-		return time.Time{}, err
+		return value, err
 	}
 
-	locationName, err := r.String()
+	buffer := make([]byte, size)
+	_, err = r.Read(buffer)
 	if err != nil {
-		return time.Time{}, err
+		return value, err
 	}
 
-	location, err := time.LoadLocation(locationName)
+	err = value.UnmarshalBinary(buffer)
 	if err != nil {
-		return time.Time{}, err
+		return value, err
 	}
 
-	return time.Unix(int64(timestamp), 0).In(location), nil
+	return value, nil
 }

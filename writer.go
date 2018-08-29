@@ -110,10 +110,20 @@ func (w BinaryWriter) String(value string) (int, error) {
 
 // Time write a time.Time
 func (w BinaryWriter) Time(value time.Time) (int, error) {
-	_, err := w.UInt64(uint64(value.Unix()))
+	buffer, err := value.MarshalBinary()
 	if err != nil {
 		return 0, err
 	}
 
-	return w.String(value.Location().String())
+	n1, err := w.UInt8(uint8(len(buffer)))
+	if err != nil {
+		return 0, err
+	}
+
+	n2, err := w.Write(buffer)
+	if err != nil {
+		return 0, err
+	}
+
+	return n1 + n2, nil
 }
