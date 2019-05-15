@@ -37,6 +37,13 @@ func (r BinaryReader) Bool() (bool, error) {
 	return false, nil
 }
 
+// Bytes read n bytes
+func (r BinaryReader) Bytes(n int) ([]byte, error) {
+	buffer := make([]byte, n)
+	_, err := r.Read(buffer)
+	return buffer, err
+}
+
 // UInt8 read a uint8
 func (r BinaryReader) UInt8() (uint8, error) {
 	buffer := make([]byte, 1)
@@ -107,7 +114,7 @@ func (r BinaryReader) Int64() (int64, error) {
 
 // Int read a int
 func (r BinaryReader) Int() (int, error) {
-	value, err := r.UInt32()
+	value, err := r.Int32()
 	return int(value), err
 }
 
