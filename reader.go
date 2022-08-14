@@ -46,8 +46,7 @@ func (r BinaryReader) Bytes(n int) ([]byte, error) {
 
 // UInt8 read a uint8
 func (r BinaryReader) UInt8() (uint8, error) {
-	buffer := make([]byte, 1)
-	_, err := r.Read(buffer)
+	buffer, err := r.Bytes(1)
 	if err != nil {
 		return 0, err
 	}
@@ -57,8 +56,7 @@ func (r BinaryReader) UInt8() (uint8, error) {
 
 // UInt16 read a uint16
 func (r BinaryReader) UInt16() (uint16, error) {
-	buffer := make([]byte, 2)
-	_, err := r.Read(buffer)
+	buffer, err := r.Bytes(2)
 	if err != nil {
 		return 0, err
 	}
@@ -68,8 +66,7 @@ func (r BinaryReader) UInt16() (uint16, error) {
 
 // UInt32 read a uint32
 func (r BinaryReader) UInt32() (uint32, error) {
-	buffer := make([]byte, 4)
-	_, err := r.Read(buffer)
+	buffer, err := r.Bytes(4)
 	if err != nil {
 		return 0, err
 	}
@@ -79,8 +76,7 @@ func (r BinaryReader) UInt32() (uint32, error) {
 
 // UInt64 read a uint64
 func (r BinaryReader) UInt64() (uint64, error) {
-	buffer := make([]byte, 8)
-	_, err := r.Read(buffer)
+	buffer, err := r.Bytes(8)
 	if err != nil {
 		return 0, err
 	}
@@ -175,4 +171,8 @@ func (r BinaryReader) Time() (time.Time, error) {
 	}
 
 	return value, nil
+}
+
+func (r BinaryReader) ByteOrder() binary.ByteOrder {
+	return r.order
 }
