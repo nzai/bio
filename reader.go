@@ -56,10 +56,10 @@ func (r BinaryReader) Bytes(n int) ([]byte, error) {
 
 // UInt8 read a uint8
 func (r BinaryReader) UInt8() (uint8, error) {
-	buffer := r.pool.Get().([]byte)
+	buffer := r.pool.Get().([]byte)[:1]
 	defer r.pool.Put(buffer[:0])
 
-	_, err := r.Read(buffer[:1])
+	_, err := r.Read(buffer)
 	if err != nil {
 		return 0, err
 	}
@@ -69,10 +69,10 @@ func (r BinaryReader) UInt8() (uint8, error) {
 
 // UInt16 read a uint16
 func (r BinaryReader) UInt16() (uint16, error) {
-	buffer := r.pool.Get().([]byte)
+	buffer := r.pool.Get().([]byte)[:2]
 	defer r.pool.Put(buffer[:0])
 
-	_, err := r.Read(buffer[:2])
+	_, err := r.Read(buffer)
 	if err != nil {
 		return 0, err
 	}
@@ -82,10 +82,10 @@ func (r BinaryReader) UInt16() (uint16, error) {
 
 // UInt32 read a uint32
 func (r BinaryReader) UInt32() (uint32, error) {
-	buffer := r.pool.Get().([]byte)
+	buffer := r.pool.Get().([]byte)[:4]
 	defer r.pool.Put(buffer[:0])
 
-	_, err := r.Read(buffer[:4])
+	_, err := r.Read(buffer)
 	if err != nil {
 		return 0, err
 	}
@@ -95,10 +95,10 @@ func (r BinaryReader) UInt32() (uint32, error) {
 
 // UInt64 read a uint64
 func (r BinaryReader) UInt64() (uint64, error) {
-	buffer := r.pool.Get().([]byte)
+	buffer := r.pool.Get().([]byte)[:8]
 	defer r.pool.Put(buffer[:0])
 
-	_, err := r.Read(buffer[:8])
+	_, err := r.Read(buffer)
 	if err != nil {
 		return 0, err
 	}
